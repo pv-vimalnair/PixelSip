@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PixelSip</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <img class="brand-mark" src="icons/icon32.png" alt="">
+        <div>
+          <p class="eyebrow">PIXELSIP</p>
+          <h1 id="status-title">Next drink</h1>
+        </div>
+        <button id="settings-button" class="icon-button" aria-label="Quiet hours settings">•••</button>
+      </header>
+
+      <section class="timer-panel" aria-live="polite">
+        <img id="glass" class="glass" src="icons/glass-full.png" alt="">
+        <div class="timer-copy">
+          <p id="timer">60:00</p>
+          <p id="status-detail">Glass drains as the hour passes</p>
+        </div>
+      </section>
+
+      <button id="drink-button" class="primary">I drank water</button>
+      <button id="pause-button" class="secondary">Pause</button>
+
+      <section id="settings" class="settings" hidden>
+        <div class="settings-heading">
+          <div>
+            <p class="eyebrow">SETTINGS</p>
+            <h2>Quiet hours</h2>
+          </div>
+          <label class="switch">
+            <input id="quiet-enabled" type="checkbox">
+            <span></span>
+          </label>
+        </div>
+        <p class="settings-help">The glass freezes while you sleep, then continues where it left off.</p>
+        <div class="time-row">
+          <label>From<input id="quiet-start" type="time" value="22:00"></label>
+          <span>→</span>
+          <label>Until<input id="quiet-end" type="time" value="07:00"></label>
+        </div>
+        <button id="save-settings" class="primary small">Save quiet hours</button>
+      </section>
+
+      <footer>
+        <span id="quiet-summary">Quiet hours · 10 PM – 7 AM</span>
+        <span class="status-dot"></span>
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
