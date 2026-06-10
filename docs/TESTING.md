@@ -20,6 +20,7 @@ node --check extension\offscreen.js
 - Daytime quiet-hour behavior
 - Next quiet-hours start
 - Time parsing and validation
+- Reminder-volume normalization and limits
 
 ### Popup contract tests
 
@@ -28,6 +29,7 @@ node --check extension\offscreen.js
 - Popup JavaScript selectors have matching HTML elements
 - Manifest-referenced runtime files exist
 - Required pixel-glass assets exist
+- Packaged reminder audio exists
 
 ## Manual test checklist
 
@@ -38,9 +40,11 @@ node --check extension\offscreen.js
 5. Pause and resume the timer.
 6. Change quiet hours and verify settings persist.
 7. Temporarily change the interval to one minute for alert testing.
-8. Verify the icon drains, shakes, plays sound, and displays a notification.
-9. Test both notification actions.
-10. Verify the timer waits for confirmation after becoming empty.
+8. Verify the icon drains, shakes, loops the sound, and displays a notification.
+9. Change reminder volume while the sound is playing and verify it updates immediately.
+10. Set volume to 0% and verify the reminder is muted.
+11. Test both notification actions and confirm they stop the sound.
+12. Verify the timer waits for confirmation after becoming empty.
 
 ## Store-package review
 

@@ -5,7 +5,7 @@
 - **Name:** PixelSip
 - **Category:** Well-being
 - **Language:** English
-- **Single purpose:** Remind users to drink water every hour using a draining toolbar glass and notification.
+- **Single purpose:** Remind users to drink water every hour using a draining toolbar glass, looping adjustable-volume sound, and notification.
 
 ## Store assets
 
@@ -41,3 +41,4 @@ Before clicking **Submit for review**:
 3. Review all public copy and screenshots.
 4. Confirm the package version and source match.
 5. Test the exact uploaded package.
+6. Confirm the packaged reminder audio is covered by the documented third-party license.

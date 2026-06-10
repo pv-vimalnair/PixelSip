@@ -20,14 +20,14 @@ const chrome = {
 let source = fs.readFileSync(path.join(__dirname, "..", "extension", "service-worker.js"), "utf8");
 source = source.replace(
   "initialize().catch(console.error);",
-  "globalThis.testApi = { getQuietWindow, getNextQuietStart, validateTime, timeToMinutes };"
+  "globalThis.testApi = { getQuietWindow, getNextQuietStart, validateTime, timeToMinutes, normalizeVolume };"
 );
 
 const context = { chrome, console, Date, setTimeout, clearTimeout };
 vm.createContext(context);
 vm.runInContext(source, context);
 
-const { getQuietWindow, getNextQuietStart, validateTime, timeToMinutes } = context.testApi;
+const { getQuietWindow, getNextQuietStart, validateTime, timeToMinutes, normalizeVolume } = context.testApi;
 const settings = { quietStart: "22:00", quietEnd: "07:00" };
 
 function localTimestamp(year, month, day, hour, minute = 0) {
@@ -49,5 +49,9 @@ assert.equal(getNextQuietStart(localTimestamp(2026, 6, 7, 12), "22:00"), localTi
 assert.equal(timeToMinutes("22:30"), 1350);
 assert.equal(validateTime("07:15", "09:00"), "07:15");
 assert.equal(validateTime("25:00", "09:00"), "09:00");
+assert.equal(normalizeVolume(0.4), 0.4);
+assert.equal(normalizeVolume(-1), 0);
+assert.equal(normalizeVolume(2), 1);
+assert.equal(normalizeVolume("not-a-number"), 0.5);
 
 console.log("PixelSip state tests passed.");

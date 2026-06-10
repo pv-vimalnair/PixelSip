@@ -12,7 +12,8 @@ const DEFAULT_STATE = {
   quietEnabled: true,
   quietStart: "22:00",
   quietEnd: "07:00",
-  quietUntil: 0
+  quietUntil: 0,
+  volume: 0.5
 };
 
 chrome.runtime.onInstalled.addListener(() => initialize());
@@ -57,6 +58,9 @@ async function handleMessage(message) {
     case "save-settings":
       await saveSettings(message.settings);
       return { ok: true, state: await getState() };
+    case "set-volume":
+      await setVolume(message.volume);
+      return { ok: true, state: await getState() };
     default:
       return { ok: false, error: "Unknown message" };
   }
@@ -83,6 +87,7 @@ async function setState(state) {
 
 async function confirmDrink() {
   const state = await getState();
+  await stopAlertSound();
   state.status = "running";
   state.remainingMs = state.intervalMinutes * MINUTE;
   state.nextReminderAt = Date.now() + state.remainingMs;
@@ -94,6 +99,7 @@ async function confirmDrink() {
 
 async function snooze() {
   const state = await getState();
+  await stopAlertSound();
   state.status = "running";
   state.remainingMs = 10 * MINUTE;
   state.nextReminderAt = Date.now() + state.remainingMs;
@@ -126,12 +132,26 @@ async function saveSettings(settings) {
   state.quietEnabled = Boolean(settings.quietEnabled);
   state.quietStart = validateTime(settings.quietStart, state.quietStart);
   state.quietEnd = validateTime(settings.quietEnd, state.quietEnd);
+  state.volume = normalizeVolume(settings.volume);
   await setState(state);
+  await updateAlertVolume(state.volume);
   await reconcile();
+}
+
+async function setVolume(volume) {
+  const state = await getState();
+  state.volume = normalizeVolume(volume);
+  await setState(state);
+  await updateAlertVolume(state.volume);
 }
 
 function validateTime(value, fallback) {
   return /^([01]\d|2[0-3]):[0-5]\d$/.test(value || "") ? value : fallback;
+}
+
+function normalizeVolume(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.min(1, Math.max(0, number)) : DEFAULT_STATE.volume;
 }
 
 async function reconcile() {
@@ -140,6 +160,7 @@ async function reconcile() {
 
   if (state.status === "paused" || state.status === "awaiting") {
     await chrome.alarms.clear(CLOCK_ALARM);
+    if (state.status === "awaiting") await playAlertSound(state.volume);
     await updateToolbarIcon(state);
     return;
   }
@@ -218,7 +239,8 @@ function timeToMinutes(time) {
 }
 
 async function alertUser() {
-  await playAlertSound();
+  const state = await getState();
+  await playAlertSound(state.volume);
   await shakeIcon();
   await chrome.notifications.create(NOTIFICATION_ID, {
     type: "basic",
@@ -232,29 +254,46 @@ async function alertUser() {
   });
 }
 
-async function playAlertSound() {
+async function playAlertSound(volume) {
+  await ensureOffscreenDocument();
+  await chrome.runtime.sendMessage({ type: "play-alert-sound", volume: normalizeVolume(volume) });
+}
+
+async function stopAlertSound() {
+  if (await hasOffscreenDocument()) {
+    await chrome.runtime.sendMessage({ type: "stop-alert-sound" });
+  }
+}
+
+async function updateAlertVolume(volume) {
+  if (await hasOffscreenDocument()) {
+    await chrome.runtime.sendMessage({ type: "set-alert-volume", volume: normalizeVolume(volume) });
+  }
+}
+
+async function hasOffscreenDocument() {
   const offscreenUrl = chrome.runtime.getURL("offscreen.html");
-  let hasDocument;
   if ("getContexts" in chrome.runtime) {
     const contexts = await chrome.runtime.getContexts({
       contextTypes: ["OFFSCREEN_DOCUMENT"],
       documentUrls: [offscreenUrl]
     });
-    hasDocument = contexts.length > 0;
-  } else {
-    const matchedClients = await clients.matchAll();
-    hasDocument = matchedClients.some((client) => client.url === offscreenUrl);
+    return contexts.length > 0;
   }
-  if (!hasDocument) {
+  const matchedClients = await clients.matchAll();
+  return matchedClients.some((client) => client.url === offscreenUrl);
+}
+
+async function ensureOffscreenDocument() {
+  if (!await hasOffscreenDocument()) {
     creatingOffscreenDocument ??= chrome.offscreen.createDocument({
       url: "offscreen.html",
       reasons: ["AUDIO_PLAYBACK"],
-      justification: "Play the hydration reminder sound."
+      justification: "Loop the hydration reminder sound until the user responds."
     });
     await creatingOffscreenDocument;
     creatingOffscreenDocument = undefined;
   }
-  await chrome.runtime.sendMessage({ type: "play-alert-sound" });
 }
 
 async function shakeIcon() {

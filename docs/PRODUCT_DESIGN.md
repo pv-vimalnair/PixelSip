@@ -2,7 +2,7 @@
 
 ## Product idea
 
-PixelSip makes elapsed time visible through a tiny glass of water in the Chrome toolbar. The icon begins full and drains downward over one hour. Once empty, it becomes an active reminder instead of silently starting another timer.
+PixelSip makes elapsed time visible through a tiny glass of water in the Chrome toolbar. The icon begins full and drains downward over one hour. Once empty, it becomes an active reminder instead of silently starting another timer. Its reminder sound repeats until the user responds, with volume controlled by the user.
 
 ## Design principles
 
@@ -37,7 +37,7 @@ The glass uses a dark rectangular outline, bright cyan water, and discrete fill 
 | State | Toolbar icon | Popup behavior |
 |---|---|---|
 | Running | Glass drains in steps | Shows remaining time and confirmation button |
-| Awaiting confirmation | Empty glass shakes with amber alert | Waits for **I drank water** |
+| Awaiting confirmation | Empty glass shakes with amber alert and looping sound | Waits for **I drank water** or snooze |
 | Snoozed | Partially filled glass for ten-minute timer | Returns to running state |
 | Paused | Muted glass | Offers resume |
 | Quiet hours | Muted glass with sleep pixels | Freezes remaining time and resumes later |
@@ -61,6 +61,7 @@ flowchart LR
 - Alert state combines motion, sound, icon state, and system notification.
 - Controls retain strong contrast against the off-white popup.
 - Quiet hours reduce unwanted nighttime interruption.
+- Reminder volume can be reduced or muted at any time.
 
 ## Future product considerations
 

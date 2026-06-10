@@ -18,7 +18,7 @@
       </header>
 
       <section class="timer-panel" aria-live="polite">
-        <img id="glass" class="glass" src="icons/glass-full.png" alt="">
+        <img id="glass" class="glass" src="icons/glass-100.png" alt="">
         <div class="timer-copy">
           <p id="timer">60:00</p>
           <p id="status-detail">Glass drains as the hour passes</p>
@@ -45,7 +45,14 @@
           <span>→</span>
           <label>Until<input id="quiet-end" type="time" value="07:00"></label>
         </div>
-        <button id="save-settings" class="primary small">Save quiet hours</button>
+        <div class="volume-row">
+          <div class="volume-label">
+            <label for="volume">Reminder volume</label>
+            <output id="volume-value" for="volume">50%</output>
+          </div>
+          <input id="volume" type="range" min="0" max="100" step="5" value="50">
+        </div>
+        <button id="save-settings" class="primary small">Save settings</button>
       </section>
 
       <footer>

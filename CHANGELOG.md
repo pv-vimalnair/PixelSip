@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 - 2026-06-10
+
+- Replaced the synthesized alert with a packaged reminder sound
+- Loops the reminder sound until the user confirms a drink or snoozes
+- Added a persistent user-controlled reminder-volume slider with mute support
+
 ## 1.0.0 - 2026-06-06
 
 Initial public release.

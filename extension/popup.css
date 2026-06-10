@@ -193,6 +193,28 @@ input[type="time"] {
   font: 700 12px "Courier New", monospace;
 }
 
+.volume-row {
+  margin: 16px 0;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+}
+
+.volume-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
 .small { min-height: 38px; }
 
 footer {

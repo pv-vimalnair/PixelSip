@@ -12,13 +12,25 @@ PixelSip is intended for people who spend long periods working or studying in Ch
 
 1. PixelSip's pinned toolbar glass begins full.
 2. The user works while the glass gradually drains.
-3. At one hour, the icon shakes and a notification appears.
+3. At one hour, the icon shakes, the reminder sound loops, and a notification appears.
 4. The user drinks water and clicks **I drank water**.
 5. The glass refills and the next hour begins.
 
 **Value:** The reminder stays visible without interrupting focus before it is needed.
 
-## Use case 2: Reminder arrives at a bad moment
+## Use case 2: Adjust reminder volume
+
+**Context:** The default reminder volume is too loud for the user's workspace.
+
+**Flow:**
+
+1. The user opens PixelSip settings.
+2. The user reduces the reminder-volume slider or sets it to 0% to mute it.
+3. PixelSip stores the preference locally and applies changes immediately.
+
+**Value:** The reminder remains useful without taking control away from the user.
+
+## Use case 3: Reminder arrives at a bad moment
 
 **Context:** The user is in a meeting when the glass becomes empty.
 
@@ -31,7 +43,7 @@ PixelSip is intended for people who spend long periods working or studying in Ch
 
 **Value:** The user can defer the reminder without losing it.
 
-## Use case 3: Sleeping or offline hours
+## Use case 4: Sleeping or offline hours
 
 **Context:** The user does not want reminders overnight.
 
@@ -44,7 +56,7 @@ PixelSip is intended for people who spend long periods working or studying in Ch
 
 **Value:** The extension respects sleeping hours without discarding timer progress.
 
-## Use case 4: Intentional pause
+## Use case 5: Intentional pause
 
 **Context:** The user temporarily wants no hydration reminders.
 

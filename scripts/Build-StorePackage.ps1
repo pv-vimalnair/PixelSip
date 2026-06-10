@@ -2,8 +2,8 @@ $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
 $extension = Join-Path $root "extension"
-$output = Join-Path $root "PixelSip-store-v1.0.0.zip"
-$filePatterns = @("icons\*.png", "manifest.json", "offscreen.html", "offscreen.js", "popup.css", "popup.html", "popup.js", "service-worker.js")
+$output = Join-Path $root "PixelSip-store-v1.1.0.zip"
+$filePatterns = @("audio\*.mp3", "icons\*.png", "manifest.json", "offscreen.html", "offscreen.js", "popup.css", "popup.html", "popup.js", "service-worker.js")
 
 if (Test-Path $output) {
     Remove-Item -LiteralPath $output

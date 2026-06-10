@@ -9,6 +9,7 @@ The extension stores only:
 - Current timer state and remaining reminder time
 - Quiet-hour preferences
 - Pause or reminder status
+- Reminder-volume preference
 
 This information remains in Chrome's local extension storage on the user's device.
 

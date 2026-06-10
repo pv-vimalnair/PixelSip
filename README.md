@@ -2,7 +2,7 @@
 
 PixelSip is a focused Chrome extension that turns its toolbar icon into a visible hydration timer.
 
-The pixel glass drains over one hour. When it becomes empty, PixelSip shakes the icon, plays a short sound, and sends a desktop notification. The next hour begins only after the user confirms **I drank water**.
+The pixel glass drains over one hour. When it becomes empty, PixelSip shakes the icon, loops a reminder sound, and sends a desktop notification. The sound stops and the next hour begins only after the user confirms **I drank water** or snoozes the reminder.
 
 ![PixelSip store preview](assets/screenshot-1280x800.png)
 
@@ -14,6 +14,7 @@ Most reminder tools disappear behind menus or become easy to ignore. PixelSip ke
 - One clear purpose: remind the user to drink water
 - No accounts, analytics, advertisements, or hydration history
 - Quiet hours that freeze and later resume the remaining timer
+- Adjustable reminder volume, including mute
 - Pixel-style interface designed to stay readable at toolbar size
 
 ## Install locally
@@ -47,6 +48,7 @@ index.html       Public GitHub Pages privacy-policy page
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 - [Changelog](CHANGELOG.md)
+- [Third-party notices](THIRD_PARTY_NOTICES.md)
 
 ## Test
 

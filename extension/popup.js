@@ -13,6 +13,8 @@ const elements = {
   quietEnabled: document.querySelector("#quiet-enabled"),
   quietStart: document.querySelector("#quiet-start"),
   quietEnd: document.querySelector("#quiet-end"),
+  volume: document.querySelector("#volume"),
+  volumeValue: document.querySelector("#volume-value"),
   saveSettings: document.querySelector("#save-settings"),
   quietSummary: document.querySelector("#quiet-summary")
 };
@@ -22,11 +24,16 @@ elements.pause.addEventListener("click", () => send("toggle-pause"));
 elements.settingsButton.addEventListener("click", () => {
   elements.settings.hidden = !elements.settings.hidden;
 });
+elements.volume.addEventListener("input", () => {
+  elements.volumeValue.textContent = `${elements.volume.value}%`;
+  send("set-volume", { volume: Number(elements.volume.value) / 100 });
+});
 elements.saveSettings.addEventListener("click", () => send("save-settings", {
   settings: {
     quietEnabled: elements.quietEnabled.checked,
     quietStart: elements.quietStart.value,
-    quietEnd: elements.quietEnd.value
+    quietEnd: elements.quietEnd.value,
+    volume: Number(elements.volume.value) / 100
   }
 }));
 
@@ -51,6 +58,8 @@ function render() {
   elements.quietEnabled.checked = state.quietEnabled;
   elements.quietStart.value = state.quietStart;
   elements.quietEnd.value = state.quietEnd;
+  elements.volume.value = Math.round(state.volume * 100);
+  elements.volumeValue.textContent = `${elements.volume.value}%`;
   elements.quietSummary.textContent = state.quietEnabled
     ? `Quiet hours · ${formatTime(state.quietStart)} – ${formatTime(state.quietEnd)}`
     : "Quiet hours · Off";

@@ -32,6 +32,7 @@ Responsibilities:
 - Shake the icon at reminder time
 - Create notifications
 - Request sound playback from the offscreen document
+- Stop the looping sound after confirmation or snooze
 
 ### Popup
 
@@ -43,10 +44,11 @@ The popup reads state through runtime messages and exposes:
 - **I drank water**
 - Pause and resume
 - Quiet-hour settings
+- Reminder-volume control
 
 ### Offscreen audio
 
-`extension/offscreen.html` and `offscreen.js` produce the short reminder sound. Manifest V3 service workers cannot directly use normal page audio APIs, so Chrome's offscreen document API is used only for audio playback.
+`extension/offscreen.html` and `offscreen.js` play the packaged reminder sound on a loop. Manifest V3 service workers cannot directly use normal page audio APIs, so Chrome's offscreen document API is used only for audio playback. The service worker sends play, stop, and live volume-update messages to this document.
 
 ## State model
 
@@ -61,6 +63,7 @@ State is stored under `pixelSipState` in `chrome.storage.local`.
 | `quietEnabled` | Whether quiet hours apply |
 | `quietStart` / `quietEnd` | Local-time quiet-hour boundaries |
 | `quietUntil` | Current quiet period's ending timestamp |
+| `volume` | Local reminder volume from `0` (muted) to `1` |
 
 ## Quiet-hours behavior
 
@@ -78,7 +81,7 @@ The implementation supports quiet windows that cross midnight.
 |---|---|
 | `alarms` | Schedule reminder and quiet-hour boundaries |
 | `notifications` | Show the drink-water reminder and actions |
-| `offscreen` | Play the locally generated reminder sound |
+| `offscreen` | Play the packaged reminder sound locally |
 | `storage` | Persist timer state and quiet-hour preferences locally |
 
 PixelSip requests no host permissions and cannot read website content or browsing history.
