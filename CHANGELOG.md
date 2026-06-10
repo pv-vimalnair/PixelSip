@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 - 2026-06-10
+
+- Corrected the glass icon geometry to match the selected screenshot exactly
+- Removed the incorrectly interpreted handle and matched the screenshot's handleless glass
+- Matched the wide rim, tapered stepped base, cyan fill, gray shadow, and L-shaped highlight
+
 ## 1.2.0 - 2026-06-10
 
 - Rebuilt every icon around the selected slim pixel-glass visual direction

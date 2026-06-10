@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
 $extension = Join-Path $root "extension"
-$output = Join-Path $root "PixelSip-store-v1.2.0.zip"
+$output = Join-Path $root "PixelSip-store-v1.2.1.zip"
 $filePatterns = @("audio\*.mp3", "icons\*.png", "manifest.json", "offscreen.html", "offscreen.js", "popup.css", "popup.html", "popup.js", "service-worker.js")
 
 if (Test-Path $output) {

@@ -330,19 +330,18 @@ function drawPixelGlass(size, state, offset = 0) {
   };
 
   ctx.clearRect(0, 0, size, size);
-  pixel("#ffffff", 5, 3, 6, 9);
-  pixel("#ffffff", 4, 4, 8, 7);
-  pixel(outline, 5, 1, 6);
-  pixel(outline, 4, 2);
-  pixel(outline, 11, 2);
-  pixel(outline, 3, 3, 1, 9);
-  pixel(outline, 12, 3, 1, 9);
-  pixel(outline, 4, 12);
-  pixel(outline, 11, 12);
+  pixel("#c7cdd2", 12, 4, 1, 8);
+  pixel("#c7cdd2", 5, 13);
+  pixel("#c7cdd2", 11, 13);
+  pixel("#c7cdd2", 6, 14, 5);
+  pixel("#ffffff", 4, 3, 8, 8);
+  pixel("#ffffff", 5, 11, 6);
+  pixel(outline, 4, 2, 8);
+  pixel(outline, 3, 3, 1, 8);
+  pixel(outline, 12, 3, 1, 8);
+  pixel(outline, 4, 11, 1, 2);
+  pixel(outline, 11, 11, 1, 2);
   pixel(outline, 5, 13, 6);
-  pixel(outline, 13, 4);
-  pixel(outline, 14, 5, 1, 4);
-  pixel(outline, 13, 9);
 
   let ratio = 0;
   if (state.status === "running") {
@@ -353,18 +352,19 @@ function drawPixelGlass(size, state, offset = 0) {
   const rows = Math.round(ratio * 8);
   if (rows > 0) {
     const top = 12 - rows;
-    pixel("#39b9e6", 4, top, 8, rows);
-    pixel("#229dcd", 5, 11, 6);
-    pixel("#e8fcff", 5, top, 2);
+    if (top < 11) pixel("#42b7e2", 4, top, 8, Math.min(rows, 11 - top));
+    if (top + rows > 11) pixel("#42b7e2", 5, 11, 6);
+    pixel("#2a9ecc", 5, 11, 6);
+    pixel("#e8fcff", 5, top, 3);
     pixel("#e8fcff", 5, top + 1);
   }
   if (state.status === "awaiting") {
     pixel("#f5b525", 1, 5);
     pixel("#f5b525", 2, 6);
     pixel("#f5b525", 1, 8);
-    pixel("#f5b525", 14, 3);
-    pixel("#f5b525", 15, 5);
-    pixel("#f5b525", 14, 7);
+    pixel("#f5b525", 14, 4);
+    pixel("#f5b525", 15, 6);
+    pixel("#f5b525", 14, 8);
   }
   if (state.status === "quiet") {
     pixel(outline, 6, 6);
