@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 - 2026-06-10
+
+- Rebuilt every icon around the selected slim pixel-glass visual direction
+- Matched the live toolbar renderer to the static full, partial, empty, alert, and quiet icons
+- Added the small right-side handle, two-tone cyan water, white highlight, and amber alert marks
+
 ## 1.1.0 - 2026-06-10
 
 - Replaced the synthesized alert with a packaged reminder sound

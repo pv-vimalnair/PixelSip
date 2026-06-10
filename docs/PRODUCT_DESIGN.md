@@ -30,7 +30,9 @@ The glass uses a dark rectangular outline, bright cyan water, and discrete fill 
 - **Alert accent:** amber
 - **Surface:** warm off-white
 - **Typography:** monospace-first, with readable system text for supporting copy
-- **Geometry:** squared forms, restrained four-pixel radii, visible pixel grid
+- **Geometry:** slim stepped glass, small right-side handle, squared forms, and visible pixel grid
+- **Water detail:** two-tone cyan fill with a white pixel highlight
+- **Alert detail:** amber side pixels around an otherwise empty glass
 
 ## Interaction states
 

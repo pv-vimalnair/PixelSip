@@ -98,3 +98,7 @@ PixelSip requests no host permissions and cannot read website content or browsin
 ## Packaging
 
 Only extension runtime files belong in the Chrome Web Store ZIP. Documentation, tests, screenshots, and packaging scripts remain in the repository but are excluded from the upload package.
+
+`scripts/Build-Icons.ps1` generates every static icon from the shared 16-pixel
+glass design. The service worker reproduces the same pixel coordinates when it
+draws the live draining toolbar icon.

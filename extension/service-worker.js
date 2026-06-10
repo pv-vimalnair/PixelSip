@@ -321,19 +321,28 @@ function drawPixelGlass(size, state, offset = 0) {
   const ctx = canvas.getContext("2d");
   ctx.imageSmoothingEnabled = false;
   const unit = Math.max(1, Math.floor(size / 16));
-  const x = Math.round((size - 10 * unit) / 2) + offset * unit;
-  const y = 2 * unit;
-  const width = 10 * unit;
-  const height = 12 * unit;
-  const outline = state.status === "paused" || state.status === "quiet" ? "#6b7280" : "#172033";
-  const water = state.status === "awaiting" ? "#f59e0b" : "#16bde8";
+  const x = Math.round((size - 16 * unit) / 2) + offset * unit;
+  const y = Math.round((size - 16 * unit) / 2);
+  const outline = state.status === "paused" || state.status === "quiet" ? "#687180" : "#0f1720";
+  const pixel = (color, px, py, width = 1, height = 1) => {
+    ctx.fillStyle = color;
+    ctx.fillRect(x + px * unit, y + py * unit, width * unit, height * unit);
+  };
 
   ctx.clearRect(0, 0, size, size);
-  ctx.fillStyle = outline;
-  ctx.fillRect(x, y, width, unit);
-  ctx.fillRect(x, y, unit, height);
-  ctx.fillRect(x + width - unit, y, unit, height);
-  ctx.fillRect(x + unit, y + height - unit, width - 2 * unit, unit);
+  pixel("#ffffff", 5, 3, 6, 9);
+  pixel("#ffffff", 4, 4, 8, 7);
+  pixel(outline, 5, 1, 6);
+  pixel(outline, 4, 2);
+  pixel(outline, 11, 2);
+  pixel(outline, 3, 3, 1, 9);
+  pixel(outline, 12, 3, 1, 9);
+  pixel(outline, 4, 12);
+  pixel(outline, 11, 12);
+  pixel(outline, 5, 13, 6);
+  pixel(outline, 13, 4);
+  pixel(outline, 14, 5, 1, 4);
+  pixel(outline, 13, 9);
 
   let ratio = 0;
   if (state.status === "running") {
@@ -341,23 +350,26 @@ function drawPixelGlass(size, state, offset = 0) {
   } else if (state.status === "quiet" || state.status === "paused") {
     ratio = Math.min(1, Math.max(0, state.remainingMs / (state.intervalMinutes * MINUTE)));
   }
-  const innerHeight = height - 3 * unit;
-  const fillHeight = Math.round(innerHeight * ratio / unit) * unit;
-  if (fillHeight > 0) {
-    ctx.fillStyle = water;
-    ctx.fillRect(x + 2 * unit, y + height - 2 * unit - fillHeight, width - 4 * unit, fillHeight);
-    ctx.fillStyle = "#8de7f7";
-    ctx.fillRect(x + 2 * unit, y + height - 2 * unit - fillHeight, width - 5 * unit, unit);
+  const rows = Math.round(ratio * 8);
+  if (rows > 0) {
+    const top = 12 - rows;
+    pixel("#39b9e6", 4, top, 8, rows);
+    pixel("#229dcd", 5, 11, 6);
+    pixel("#e8fcff", 5, top, 2);
+    pixel("#e8fcff", 5, top + 1);
   }
   if (state.status === "awaiting") {
-    ctx.fillStyle = "#f59e0b";
-    ctx.fillRect(x + 4 * unit, 0, 2 * unit, 2 * unit);
+    pixel("#f5b525", 1, 5);
+    pixel("#f5b525", 2, 6);
+    pixel("#f5b525", 1, 8);
+    pixel("#f5b525", 14, 3);
+    pixel("#f5b525", 15, 5);
+    pixel("#f5b525", 14, 7);
   }
   if (state.status === "quiet") {
-    ctx.fillStyle = "#8791a5";
-    ctx.fillRect(x + 4 * unit, y + 4 * unit, unit, unit);
-    ctx.fillRect(x + 5 * unit, y + 3 * unit, unit, unit);
-    ctx.fillRect(x + 6 * unit, y + 2 * unit, unit, unit);
+    pixel(outline, 6, 6);
+    pixel(outline, 7, 5);
+    pixel(outline, 8, 4);
   }
   return ctx.getImageData(0, 0, size, size);
 }

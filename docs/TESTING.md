@@ -50,6 +50,7 @@ node --check extension\offscreen.js
 
 Before uploading a new version:
 
+- Run `scripts\Build-Icons.ps1` and visually inspect the 16px toolbar icon.
 - Confirm the ZIP root contains `manifest.json`.
 - Confirm no documentation, test files, or secrets are included.
 - Confirm the manifest version number has increased.
